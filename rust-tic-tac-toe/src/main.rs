@@ -16,7 +16,7 @@ use piston_window::{
     ReleaseEvent,
     Button,
     MouseButton,
-    Window,
+    ImageSize,
 };
 
 use sprite::{
