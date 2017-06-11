@@ -1,0 +1,12 @@
+language: rust
+rust:
+    - nightly
+
+before_script:
+    - cd rust-tic-tac-toe/ 
+
+script:
+    - cargo build --bin rust-tic-tac-toe
+    - cargo run --bin rust-tic-tac-toe & echo $! > /tmp/service.pid 
+    - sleep 5 # let some time for the service to start
+    - kill "$(cat /tmp/service.pid)"
