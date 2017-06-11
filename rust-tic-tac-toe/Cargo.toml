@@ -4,5 +4,6 @@ version = "0.1.0"
 authors = ["Jean LELIEVRE <Jean.LELIEVRE@supinfo.com>"]
 
 [dependencies]
+uuid = "0.1"
 piston_window = "0.66.0"
 piston2d-sprite = "0.36.0"

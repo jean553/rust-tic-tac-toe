@@ -1,5 +1,8 @@
 extern crate piston_window;
 extern crate sprite;
+extern crate uuid;
+
+use uuid::Uuid;
 
 use std::rc::Rc;
 
