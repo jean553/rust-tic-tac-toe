@@ -24,6 +24,21 @@ use sprite::{
     Scene,
 };
 
+fn create_pin<T: ImageSize>(
+    scene: &mut Scene<T>,
+    uuids: &mut Vec<Uuid>,
+    texture: &Rc<T>
+)
+{
+    let mut sprite = Sprite::from_texture(texture.clone());
+
+    /* TODO: should be set according to the cursor location */
+    sprite.set_position(100.0, 100.0);
+
+    let uuid: Uuid = scene.add_child(sprite);
+    uuids.push(uuid);
+}
+
 fn main() {
 
     let mut window: PistonWindow = WindowSettings::new(
