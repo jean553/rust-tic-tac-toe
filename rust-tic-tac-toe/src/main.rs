@@ -16,13 +16,28 @@ use piston_window::{
     ReleaseEvent,
     Button,
     MouseButton,
-    Window,
+    ImageSize,
 };
 
 use sprite::{
     Sprite,
     Scene,
 };
+
+fn create_pin<T: ImageSize>(
+    scene: &mut Scene<T>,
+    uuids: &mut Vec<Uuid>,
+    texture: &Rc<T>
+)
+{
+    let mut sprite = Sprite::from_texture(texture.clone());
+
+    /* TODO: should be set according to the cursor location */
+    sprite.set_position(100.0, 100.0);
+
+    let uuid: Uuid = scene.add_child(sprite);
+    uuids.push(uuid);
+}
 
 fn main() {
 
@@ -55,12 +70,8 @@ fn main() {
         &TextureSettings::new()
     ).unwrap();
 
-    /* just for tests purposes, the table should be empty at the beginning */
-    let mut scene = Scene::new();
-    let mut black_sprite = Sprite::from_texture(black.clone());
-    black_sprite.set_position(65.0, 55.0);
-
-    let black_sprite_uuid: Uuid = scene.add_child(black_sprite);
+    let mut scene: Scene<_> = Scene::new();
+    let mut uuids: Vec<Uuid> = Vec::new();
 
     while let Some(event) = window.next() {
 
@@ -86,11 +97,15 @@ fn main() {
         );
 
         if let Some(Button::Mouse(MouseButton::Left)) = event.release_args() {
-            window.set_should_close(true);
+
+            create_pin(
+                &mut scene,
+                &mut uuids,
+                &black,
+            );
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
-            scene.remove_child(black_sprite_uuid);
         }
     }
 }
