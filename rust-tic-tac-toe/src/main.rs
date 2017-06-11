@@ -97,11 +97,15 @@ fn main() {
         );
 
         if let Some(Button::Mouse(MouseButton::Left)) = event.release_args() {
-            window.set_should_close(true);
+
+            create_pin(
+                &mut scene,
+                &mut uuids,
+                &black,
+            );
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
-            scene.remove_child(black_sprite_uuid);
         }
     }
 }
