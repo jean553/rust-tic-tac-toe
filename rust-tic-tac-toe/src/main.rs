@@ -70,12 +70,8 @@ fn main() {
         &TextureSettings::new()
     ).unwrap();
 
-    /* just for tests purposes, the table should be empty at the beginning */
-    let mut scene = Scene::new();
-    let mut black_sprite = Sprite::from_texture(black.clone());
-    black_sprite.set_position(65.0, 55.0);
-
-    let black_sprite_uuid: Uuid = scene.add_child(black_sprite);
+    let mut scene: Scene<_> = Scene::new();
+    let mut uuids: Vec<Uuid> = Vec::new();
 
     while let Some(event) = window.next() {
 
