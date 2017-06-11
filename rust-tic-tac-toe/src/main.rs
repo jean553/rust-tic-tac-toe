@@ -7,6 +7,10 @@ use piston_window::{
     TextureSettings,
     Flip,
     image,
+    ReleaseEvent,
+    Button,
+    MouseButton,
+    Window,
 };
 
 fn main() {
@@ -34,5 +38,9 @@ fn main() {
                 image(&table, context.transform, window);
             }
         );
+
+        if let Some(Button::Mouse(MouseButton::Left)) = event.release_args() {
+            window.set_should_close(true);
+        }
     }
 }
