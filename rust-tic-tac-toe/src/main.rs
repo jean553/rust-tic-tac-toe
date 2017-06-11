@@ -1,4 +1,7 @@
 extern crate piston_window;
+extern crate sprite;
+
+use std::rc::Rc;
 
 use piston_window::{
     PistonWindow,
@@ -11,6 +14,11 @@ use piston_window::{
     Button,
     MouseButton,
     Window,
+};
+
+use sprite::{
+    Sprite,
+    Scene,
 };
 
 fn main() {
