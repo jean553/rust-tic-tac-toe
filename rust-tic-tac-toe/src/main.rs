@@ -1,5 +1,8 @@
 extern crate piston_window;
 extern crate sprite;
+extern crate uuid;
+
+use uuid::Uuid;
 
 use std::rc::Rc;
 
@@ -56,7 +59,8 @@ fn main() {
     let mut scene = Scene::new();
     let mut black_sprite = Sprite::from_texture(black.clone());
     black_sprite.set_position(65.0, 55.0);
-    scene.add_child(black_sprite);
+
+    let black_sprite_uuid: Uuid = scene.add_child(black_sprite);
 
     while let Some(event) = window.next() {
 
@@ -83,6 +87,10 @@ fn main() {
 
         if let Some(Button::Mouse(MouseButton::Left)) = event.release_args() {
             window.set_should_close(true);
+        }
+
+        if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
+            scene.remove_child(black_sprite_uuid);
         }
     }
 }
