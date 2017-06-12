@@ -24,6 +24,8 @@ use sprite::{
     Scene,
 };
 
+/// Displays a new pin on the table,
+/// the pin sprite is created from the given texture
 fn create_pin<T: ImageSize>(
     scene: &mut Scene<T>,
     uuids: &mut Vec<Uuid>,
@@ -39,6 +41,7 @@ fn create_pin<T: ImageSize>(
     uuids.push(uuid);
 }
 
+/// Removes all children from the scene and empty the uuids vector
 fn restart_game<T: ImageSize>(
     scene: &mut Scene<T>,
     uuids: &mut Vec<Uuid>,
