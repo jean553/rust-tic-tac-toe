@@ -39,6 +39,21 @@ fn create_pin<T: ImageSize>(
     uuids.push(uuid);
 }
 
+fn restart_game<T: ImageSize>(
+    scene: &mut Scene<T>,
+    uuids: &mut Vec<Uuid>,
+)
+{
+    /* first dereference uuids to get the vector from its mutable reference;
+       do not borrow the uuids vector by prepending a & because of uuids.clear();
+       get a &Uuid, so we dereference it when call remove_child() */
+    for uuid in &*uuids {
+        scene.remove_child(*uuid);
+    }
+
+    uuids.clear();
+}
+
 fn main() {
 
     let mut window: PistonWindow = WindowSettings::new(
@@ -106,6 +121,11 @@ fn main() {
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
+
+            restart_game(
+                &mut scene,
+                &mut uuids,
+            );
         }
     }
 }
