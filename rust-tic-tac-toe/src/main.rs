@@ -103,7 +103,18 @@ fn main() {
                 &pin_position_y,
             );
 
-            let ai_pin_location = ai::find_next_pin_location(&cells);
+            let ai_pin_address = ai::find_next_pin_location(&cells);
+
+            let (pin_position_x, pin_position_y) =
+                utils::get_pin_position_from_address(ai_pin_address);
+
+            utils::create_pin(
+                &mut scene,
+                &mut uuids,
+                &red,
+                &pin_position_x,
+                &pin_position_y,
+            );
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
