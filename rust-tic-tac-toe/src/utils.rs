@@ -33,22 +33,51 @@ pub fn create_pin<T: ImageSize>(
     scene: &mut Scene<T>,
     uuids: &mut Vec<Uuid>,
     texture: &Rc<T>,
-    cursor_position_x: &f64,
-    cursor_position_y: &f64,
+    pin_position_x: &f64,
+    pin_position_y: &f64,
 )
 {
     let mut sprite = Sprite::from_texture(texture.clone());
 
-    /* cast into integers for euclidean division */
-    let pin_position_x: u32 = (*cursor_position_x as u32 / 126) * 126 + 66;
-    let pin_position_y: u32 = (*cursor_position_y as u32 / 114) * 114 + 57;
-
     sprite.set_position(
-        pin_position_x as f64,
-        pin_position_y as f64,
+        *pin_position_x,
+        *pin_position_y,
     );
 
     let uuid: Uuid = scene.add_child(sprite);
     uuids.push(uuid);
 }
 
+/// Returns the position of a pin according to the cursor position
+pub fn get_pin_position_from_cursor_position(
+    cursor_position_x: &f64,
+    cursor_position_y: &f64,
+) -> (f64, f64) {
+
+    /* cast into integers for euclidean division */
+    (
+        ((*cursor_position_x as u32 / 126) * 126 + 66) as f64,
+        ((*cursor_position_y as u32 / 114) * 114 + 57) as f64
+    )
+}
+
+/// Returns the position of a pin according to its address on the table
+pub fn get_pin_position_from_address(address: u8) -> (f64, f64){
+
+    let horizontal_address: u8 = match address {
+        0 | 3 | 6 => 0,
+        1 | 4 | 7 => 1,
+        _ => 2,
+    };
+
+    let vertical_address: u8 = match address {
+        0 | 1 | 2 => 0,
+        3 | 4 | 5 => 1,
+        _ => 2,
+    };
+
+    (
+        (horizontal_address * 126 + 66) as f64,
+        (vertical_address * 114 + 57) as f64
+    )
+}
