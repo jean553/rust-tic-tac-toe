@@ -60,3 +60,24 @@ pub fn get_pin_position_from_cursor_position(
         ((*cursor_position_y as u32 / 114) * 114 + 57) as f64
     )
 }
+
+/// Returns the position of a pin according to its address on the table
+pub fn get_pin_position_from_address(address: u8) -> (f64, f64){
+
+    let horizontal_address: u8 = match address {
+        0 | 3 | 6 => 0,
+        1 | 4 | 7 => 1,
+        _ => 2,
+    };
+
+    let vertical_address: u8 = match address {
+        0 | 1 | 2 => 0,
+        3 | 4 | 5 => 1,
+        _ => 2,
+    };
+
+    (
+        (horizontal_address * 126 + 66) as f64,
+        (vertical_address * 114 + 57) as f64
+    )
+}
