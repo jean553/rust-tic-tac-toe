@@ -24,6 +24,7 @@ use sprite::{
 };
 
 mod utils;
+mod ai;
 
 fn main() {
 
@@ -58,6 +59,7 @@ fn main() {
 
     let mut scene: Scene<_> = Scene::new();
     let mut uuids: Vec<Uuid> = Vec::new();
+    let mut cells = [0; 9];
 
     let mut cursor_position_x: f64 = 0.0;
     let mut cursor_position_y: f64 = 0.0;
@@ -87,13 +89,21 @@ fn main() {
 
         if let Some(Button::Mouse(MouseButton::Left)) = event.release_args() {
 
+            let (pin_position_x, pin_position_y) =
+                utils::get_pin_position_from_cursor_position(
+                    &cursor_position_x,
+                    &cursor_position_y,
+                );
+
             utils::create_pin(
                 &mut scene,
                 &mut uuids,
                 &black,
-                &cursor_position_x,
-                &cursor_position_y,
+                &pin_position_x,
+                &pin_position_y,
             );
+
+            let ai_pin_location = ai::find_next_pin_location(&cells);
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
