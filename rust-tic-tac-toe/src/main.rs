@@ -17,6 +17,7 @@ use piston_window::{
     Button,
     MouseButton,
     ImageSize,
+    MouseCursorEvent,
 };
 
 use sprite::{
@@ -29,13 +30,21 @@ use sprite::{
 fn create_pin<T: ImageSize>(
     scene: &mut Scene<T>,
     uuids: &mut Vec<Uuid>,
-    texture: &Rc<T>
+    texture: &Rc<T>,
+    cursor_position_x: &f64,
+    cursor_position_y: &f64,
 )
 {
     let mut sprite = Sprite::from_texture(texture.clone());
 
-    /* TODO: should be set according to the cursor location */
-    sprite.set_position(100.0, 100.0);
+    /* cast into integers for euclidean division */
+    let pin_position_x: u32 = (*cursor_position_x as u32 / 126) * 126 + 66;
+    let pin_position_y: u32 = (*cursor_position_y as u32 / 114) * 114 + 57;
+
+    sprite.set_position(
+        pin_position_x as f64,
+        pin_position_y as f64,
+    );
 
     let uuid: Uuid = scene.add_child(sprite);
     uuids.push(uuid);
@@ -91,6 +100,9 @@ fn main() {
     let mut scene: Scene<_> = Scene::new();
     let mut uuids: Vec<Uuid> = Vec::new();
 
+    let mut cursor_position_x: f64 = 0.0;
+    let mut cursor_position_y: f64 = 0.0;
+
     while let Some(event) = window.next() {
 
         window.draw_2d(
@@ -120,6 +132,8 @@ fn main() {
                 &mut scene,
                 &mut uuids,
                 &black,
+                &cursor_position_x,
+                &cursor_position_y,
             );
         }
 
@@ -129,6 +143,16 @@ fn main() {
                 &mut scene,
                 &mut uuids,
             );
+        }
+
+        match event.mouse_cursor_args() {
+            Some(position) => {
+                cursor_position_x = position[0];
+                cursor_position_y = position[1];
+            }
+            None => {
+                continue;
+            }
         }
     }
 }
