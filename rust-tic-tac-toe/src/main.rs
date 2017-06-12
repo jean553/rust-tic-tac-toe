@@ -145,14 +145,9 @@ fn main() {
             );
         }
 
-        match event.mouse_cursor_args() {
-            Some(position) => {
-                cursor_position_x = position[0];
-                cursor_position_y = position[1];
-            }
-            None => {
-                continue;
-            }
+        if let Some(position) = event.mouse_cursor_args() {
+            cursor_position_x = position[0];
+            cursor_position_y = position[1];
         }
     }
 }
