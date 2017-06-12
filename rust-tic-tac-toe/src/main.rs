@@ -121,6 +121,11 @@ fn main() {
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
+
+            restart_game(
+                &mut scene,
+                &mut uuids,
+            );
         }
     }
 }
