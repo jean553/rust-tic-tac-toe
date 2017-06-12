@@ -50,16 +50,16 @@ fn main() {
         &TextureSettings::new()
     ).unwrap());
 
-    let red = Texture::from_path(
+    let red = Rc::new(Texture::from_path(
         &mut window.factory,
         "res/red.png",
         Flip::None,
         &TextureSettings::new()
-    ).unwrap();
+    ).unwrap());
 
     let mut scene: Scene<_> = Scene::new();
     let mut uuids: Vec<Uuid> = Vec::new();
-    let mut cells = [0; 9];
+    let cells = [0; 9];
 
     let mut cursor_position_x: f64 = 0.0;
     let mut cursor_position_y: f64 = 0.0;
