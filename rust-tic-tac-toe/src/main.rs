@@ -1,3 +1,5 @@
+#![feature(step_by)]
+
 extern crate piston_window;
 extern crate sprite;
 extern crate uuid;
@@ -124,7 +126,7 @@ fn main() {
                 &pin_position_y,
             );
 
-            cells[ai_pin_address as usize] = 2;
+            cells[ai_pin_address as usize] = 5;
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
