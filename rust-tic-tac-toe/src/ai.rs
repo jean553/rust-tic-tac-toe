@@ -1,3 +1,9 @@
+/// Type of pin with its pin value for calculation facilities
+enum PinType {
+    Ai(u8),
+    Player(u8),
+}
+
 /// Calculate the AI pin location according to the current pin(s) on the table
 /// NOTE: partially defined
 pub fn find_next_pin_location(cells: &[u8]) -> u8 {
