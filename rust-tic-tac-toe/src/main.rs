@@ -119,23 +119,7 @@ fn main() {
                 &pin_position_y,
             );
 
-            let mut ai_pin_address = ai::get_last_address_for_full_line(
-                &cells,
-                ai::PinType::Ai(10),
-            );
-
-            if ai_pin_address == None {
-                ai_pin_address = ai::get_last_address_for_full_line(
-                    &cells,
-                    ai::PinType::Ai(2),
-                );
-            }
-
-            if ai_pin_address == None {
-                ai_pin_address = ai::find_next_pin_location(&cells);
-            }
-
-            match ai_pin_address {
+            match ai::find_next_pin_location(&cells) {
                 Some(address) => {
                     let (pin_position_x, pin_position_y) =
                         utils::get_pin_position_from_address(address);
