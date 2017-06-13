@@ -59,7 +59,7 @@ fn main() {
 
     let mut scene: Scene<_> = Scene::new();
     let mut uuids: Vec<Uuid> = Vec::new();
-    let cells = [0; 9];
+    let mut cells = [0; 9];
 
     let mut cursor_position_x: f64 = 0.0;
     let mut cursor_position_y: f64 = 0.0;
@@ -115,6 +115,8 @@ fn main() {
                 &pin_position_x,
                 &pin_position_y,
             );
+
+            cells[ai_pin_address as usize] = 2;
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
