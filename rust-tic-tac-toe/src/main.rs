@@ -95,6 +95,14 @@ fn main() {
                     &cursor_position_y,
                 );
 
+            let player_pin_address =
+                utils::get_pin_address_from_position(
+                    &pin_position_x,
+                    &pin_position_y,
+                );
+
+            cells[player_pin_address as usize] = 1;
+
             utils::create_pin(
                 &mut scene,
                 &mut uuids,
