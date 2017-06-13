@@ -93,5 +93,7 @@ pub fn get_pin_address_from_position(
         (*pin_position_y as u32 / 114) as u8,
     );
 
-    return vertical_address / 3 + horizontal_address;
+    println!("{} {}", horizontal_address, vertical_address);
+
+    return vertical_address * 3 + horizontal_address;
 }
