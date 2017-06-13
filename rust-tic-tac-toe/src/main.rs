@@ -119,6 +119,11 @@ fn main() {
                 &pin_position_y,
             );
 
+            if utils::is_game_finished(&cells) {
+                play = false;
+                continue;
+            }
+
             match ai::find_next_pin_location(&cells) {
                 Some(address) => {
                     let (pin_position_x, pin_position_y) =
@@ -133,6 +138,10 @@ fn main() {
                     );
 
                     cells[address as usize] = 5;
+
+                    if utils::is_game_finished(&cells) {
+                        play = false;
+                    }
                 },
                 None => {
                     play = false;
