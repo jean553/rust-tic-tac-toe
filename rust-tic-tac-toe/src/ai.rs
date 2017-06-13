@@ -1,52 +1,30 @@
 /// Type of pin with its pin value for calculation facilities
-enum PinType {
+pub enum PinType {
     Ai(u8),
     Player(u8),
 }
 
 /// Calculate the AI pin location according to the current pin(s) on the table
 /// NOTE: partially defined
-pub fn find_next_pin_location(cells: &[u8]) -> u8 {
-
-    /* try to win the game with the next pin */
-    match get_last_address_for_full_line(
-        &cells,
-        PinType::Ai(10),
-    ) {
-        Some(address) => {
-            return address
-        },
-        None => {},
-    }
-
-    /* try to block the player if he can win with his next pin */
-    match get_last_address_for_full_line(
-        &cells,
-        PinType::Player(2),
-    ) {
-        Some(address) => {
-            return address
-        },
-        None => {},
-    }
+pub fn find_next_pin_location(cells: &[u8]) -> Option<u8> {
 
     /* try to add pin at the center cell */
     if cells[4] == 0 {
-        return 4;
+        return Some(4);
     }
 
     /* try to add pin to one corner cell */
     for corner_address in [0, 2, 6, 8].iter() {
         if cells[*corner_address as usize] == 0 {
-            return *corner_address;
+            return Some(*corner_address);
         }
     }
 
-    return 0;
+    None
 }
 
 /// Tries to finish a line
-fn get_last_address_for_full_line(
+pub fn get_last_address_for_full_line(
     cells: &[u8],
     current_sum: PinType,
 ) -> Option<u8> {
