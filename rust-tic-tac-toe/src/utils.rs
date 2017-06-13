@@ -15,6 +15,7 @@ use sprite::{
 pub fn restart_game<T: ImageSize>(
     scene: &mut Scene<T>,
     uuids: &mut Vec<Uuid>,
+    cells: &mut [u8; 9],
 )
 {
     /* first dereference uuids to get the vector from its mutable reference;
@@ -25,6 +26,10 @@ pub fn restart_game<T: ImageSize>(
     }
 
     uuids.clear();
+
+    for cell in cells.iter_mut() {
+        *cell = 0;
+    }
 }
 
 /// Displays a new pin on the table,
@@ -94,4 +99,42 @@ pub fn get_pin_address_from_position(
     );
 
     return vertical_address * 3 + horizontal_address;
+}
+
+/// Checks if the game is finished (one line is full of pins with same type)
+pub fn is_game_finished(cells: &[u8]) -> bool {
+
+    if cells[0] == cells[1] && cells[1] == cells[2] && cells[2] != 0 {
+        return true;
+    }
+
+    if cells[3] == cells[4] && cells[4] == cells[5] && cells[5] != 0 {
+        return true;
+    }
+
+    if cells[6] == cells[7] && cells[7] == cells[8] && cells[8] != 0 {
+        return true;
+    }
+
+    if cells[0] == cells[3] && cells[3] == cells[6] && cells[6] != 0 {
+        return true;
+    }
+
+    if cells[1] == cells[4] && cells[4] == cells[7] && cells[7] != 0 {
+        return true;
+    }
+
+    if cells[2] == cells[5] && cells[5] == cells[8] && cells[8] != 0 {
+        return true;
+    }
+
+    if cells[0] == cells[4] && cells[4] == cells[8] && cells[8] != 0 {
+        return true;
+    }
+
+    if cells[2] == cells[4] && cells[4] == cells[6] && cells[6] != 0 {
+        return true;
+    }
+
+    false
 }

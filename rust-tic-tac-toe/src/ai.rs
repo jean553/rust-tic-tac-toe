@@ -8,6 +8,24 @@ pub enum PinType {
 /// NOTE: partially defined
 pub fn find_next_pin_location(cells: &[u8]) -> Option<u8> {
 
+    let mut ai_pin_address = get_last_address_for_full_line(
+        &cells,
+        PinType::Ai(10),
+    );
+
+    if ai_pin_address.is_some() {
+        return ai_pin_address;
+    }
+
+    ai_pin_address = get_last_address_for_full_line(
+        &cells,
+        PinType::Player(2),
+    );
+
+    if ai_pin_address.is_some() {
+        return ai_pin_address;
+    }
+
     /* try to add pin at the center cell */
     if cells[4] == 0 {
         return Some(4);
@@ -24,7 +42,7 @@ pub fn find_next_pin_location(cells: &[u8]) -> Option<u8> {
 }
 
 /// Tries to finish a line
-pub fn get_last_address_for_full_line(
+fn get_last_address_for_full_line(
     cells: &[u8],
     current_sum: PinType,
 ) -> Option<u8> {

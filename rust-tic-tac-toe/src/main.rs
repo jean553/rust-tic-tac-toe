@@ -119,23 +119,12 @@ fn main() {
                 &pin_position_y,
             );
 
-            let mut ai_pin_address = ai::get_last_address_for_full_line(
-                &cells,
-                ai::PinType::Ai(10),
-            );
-
-            if ai_pin_address == None {
-                ai_pin_address = ai::get_last_address_for_full_line(
-                    &cells,
-                    ai::PinType::Ai(2),
-                );
+            if utils::is_game_finished(&cells) {
+                play = false;
+                continue;
             }
 
-            if ai_pin_address == None {
-                ai_pin_address = ai::find_next_pin_location(&cells);
-            }
-
-            match ai_pin_address {
+            match ai::find_next_pin_location(&cells) {
                 Some(address) => {
                     let (pin_position_x, pin_position_y) =
                         utils::get_pin_position_from_address(address);
@@ -149,6 +138,10 @@ fn main() {
                     );
 
                     cells[address as usize] = 5;
+
+                    if utils::is_game_finished(&cells) {
+                        play = false;
+                    }
                 },
                 None => {
                     play = false;
@@ -161,6 +154,7 @@ fn main() {
             utils::restart_game(
                 &mut scene,
                 &mut uuids,
+                &mut cells,
             );
 
             play = true;
