@@ -154,6 +154,7 @@ fn main() {
             utils::restart_game(
                 &mut scene,
                 &mut uuids,
+                &mut cells,
             );
 
             play = true;

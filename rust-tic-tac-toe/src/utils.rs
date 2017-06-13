@@ -15,6 +15,7 @@ use sprite::{
 pub fn restart_game<T: ImageSize>(
     scene: &mut Scene<T>,
     uuids: &mut Vec<Uuid>,
+    cells: &mut [u8; 9],
 )
 {
     /* first dereference uuids to get the vector from its mutable reference;
@@ -25,6 +26,10 @@ pub fn restart_game<T: ImageSize>(
     }
 
     uuids.clear();
+
+    for cell in cells.iter_mut() {
+        *cell = 0;
+    }
 }
 
 /// Displays a new pin on the table,
