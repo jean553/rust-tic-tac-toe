@@ -109,6 +109,10 @@ fn main() {
                     &pin_position_y,
                 );
 
+            if cells[player_pin_address as usize] != 0 {
+                continue;
+            }
+
             cells[player_pin_address as usize] = 1;
 
             utils::create_pin(
