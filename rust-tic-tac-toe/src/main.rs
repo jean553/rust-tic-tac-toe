@@ -66,6 +66,8 @@ fn main() {
     let mut cursor_position_x: f64 = 0.0;
     let mut cursor_position_y: f64 = 0.0;
 
+    let mut play = true;
+
     while let Some(event) = window.next() {
 
         window.draw_2d(
@@ -91,6 +93,10 @@ fn main() {
 
         if let Some(Button::Mouse(MouseButton::Left)) = event.release_args() {
 
+            if play == false {
+                continue;
+            }
+
             let (pin_position_x, pin_position_y) =
                 utils::get_pin_position_from_cursor_position(
                     &cursor_position_x,
@@ -113,20 +119,41 @@ fn main() {
                 &pin_position_y,
             );
 
-            let ai_pin_address = ai::find_next_pin_location(&cells);
-
-            let (pin_position_x, pin_position_y) =
-                utils::get_pin_position_from_address(ai_pin_address);
-
-            utils::create_pin(
-                &mut scene,
-                &mut uuids,
-                &red,
-                &pin_position_x,
-                &pin_position_y,
+            let mut ai_pin_address = ai::get_last_address_for_full_line(
+                &cells,
+                ai::PinType::Ai(10),
             );
 
-            cells[ai_pin_address as usize] = 5;
+            if ai_pin_address == None {
+                ai_pin_address = ai::get_last_address_for_full_line(
+                    &cells,
+                    ai::PinType::Ai(2),
+                );
+            }
+
+            if ai_pin_address == None {
+                ai_pin_address = ai::find_next_pin_location(&cells);
+            }
+
+            match ai_pin_address {
+                Some(address) => {
+                    let (pin_position_x, pin_position_y) =
+                        utils::get_pin_position_from_address(address);
+
+                    utils::create_pin(
+                        &mut scene,
+                        &mut uuids,
+                        &red,
+                        &pin_position_x,
+                        &pin_position_y,
+                    );
+
+                    cells[address as usize] = 5;
+                },
+                None => {
+                    play = false;
+                }
+            };
         }
 
         if let Some(Button::Mouse(MouseButton::Right)) = event.release_args() {
@@ -135,6 +162,8 @@ fn main() {
                 &mut scene,
                 &mut uuids,
             );
+
+            play = true;
         }
 
         if let Some(position) = event.mouse_cursor_args() {
