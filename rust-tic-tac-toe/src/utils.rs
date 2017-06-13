@@ -95,3 +95,41 @@ pub fn get_pin_address_from_position(
 
     return vertical_address * 3 + horizontal_address;
 }
+
+/// Checks if the game is finished (one line is full of pins with same type)
+pub fn is_game_finished(cells: &[u8]) -> bool {
+
+    if cells[0] == cells[1] && cells[1] == cells[2] && cells[2] != 0 {
+        return true;
+    }
+
+    if cells[3] == cells[4] && cells[4] == cells[5] && cells[5] != 0 {
+        return true;
+    }
+
+    if cells[6] == cells[7] && cells[7] == cells[8] && cells[8] != 0 {
+        return true;
+    }
+
+    if cells[0] == cells[3] && cells[3] == cells[6] && cells[6] != 0 {
+        return true;
+    }
+
+    if cells[1] == cells[4] && cells[4] == cells[7] && cells[7] != 0 {
+        return true;
+    }
+
+    if cells[2] == cells[5] && cells[5] == cells[8] && cells[8] != 0 {
+        return true;
+    }
+
+    if cells[0] == cells[4] && cells[4] == cells[8] && cells[8] != 0 {
+        return true;
+    }
+
+    if cells[2] == cells[4] && cells[4] == cells[6] && cells[6] != 0 {
+        return true;
+    }
+
+    false
+}
