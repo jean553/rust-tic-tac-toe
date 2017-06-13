@@ -1,3 +1,5 @@
+#![feature(step_by)]
+
 extern crate piston_window;
 extern crate sprite;
 extern crate uuid;
