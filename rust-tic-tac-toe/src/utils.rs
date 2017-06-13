@@ -81,3 +81,17 @@ pub fn get_pin_position_from_address(address: u8) -> (f64, f64){
         (vertical_address * 114.0 + 57.0)
     )
 }
+
+/// Returns the pin address from its graphical position
+pub fn get_pin_address_from_position(
+    pin_position_x: &f64,
+    pin_position_y: &f64,
+) -> u8
+{
+    let (horizontal_address, vertical_address) = (
+        (*pin_position_x as u32 / 126) as u8,
+        (*pin_position_y as u32 / 114) as u8,
+    );
+
+    return vertical_address / 3 + horizontal_address;
+}
