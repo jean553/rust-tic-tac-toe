@@ -4,11 +4,18 @@
 
 ![Image 1](screenshot.png)
 
+Useless tic-tac-toe game. My only goal was to practice using Rust.
+
 ## Start
 
 ```
 cargo run
 ```
+
+## Commands
+
+ * left click: add a pin,
+ * right click: restart the game
 
 ## Credits
 
