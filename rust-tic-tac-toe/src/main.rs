@@ -78,12 +78,7 @@ fn main() {
                     context.transform,
                     window
                 );
-            }
-        );
 
-        window.draw_2d(
-            &event,
-            |context, window| {
                 scene.draw(
                     context.transform,
                     window
