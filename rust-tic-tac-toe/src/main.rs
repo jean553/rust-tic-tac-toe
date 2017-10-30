@@ -1,4 +1,4 @@
-#![feature(step_by)]
+#![feature(iterator_step_by)]
 
 extern crate piston_window;
 extern crate sprite;
